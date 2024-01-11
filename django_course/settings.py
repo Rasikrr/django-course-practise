@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     "main",
+    "goods"
 
 ]
 
@@ -58,7 +59,9 @@ ROOT_URLCONF = 'django_course.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates', BASE_DIR / "main" / "templates" / "main"]
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR / "main" / "templates" / "main",
+                 BASE_DIR / "goods" / "templates" / "goods"
+                 ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
