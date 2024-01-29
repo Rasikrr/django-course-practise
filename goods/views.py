@@ -5,9 +5,11 @@ from goods.models import Categories, Products
 
 
 def catalog(request):
-    categories = Categories.objects.all()
-    context = {"categories": categories}
-    return render(request, "catalog.html")
+    goods = Products.objects.all()
+    context = {
+        "goods": goods
+    }
+    return render(request, "catalog.html", context=context)
 
 def product(request):
     return render(request, "product.html")
