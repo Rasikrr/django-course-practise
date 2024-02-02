@@ -74,16 +74,20 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center my-4">
             <div class="custom-shadow d-flex">
-                <li class="page-item disabled">
-                  <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
+                <li class="page-item {% if not goods.has_previous %} disabled {% endif %}">
+                    <a class="page-link" href="{% if goods.has_previous %}
+                    {% url "catalog:catalog" category_slug=slug_url page=goods.previous_page_number %}
+                  {% else %} # {% endif %}">Previous</a>                </li>
+                    {% for page in goods.paginator.page_range %}
+                        <li class="page-item {% if page == goods.number %} disabled {% endif %}"><a class="page-link" href="{% url "catalog:catalog" category_slug=slug_url page=page %}">{{ page }}</a></li>
+                    {% endfor %}
+                <li class="page-item {% if not goods.has_next %} disabled {% endif %}">
+                  <a class="page-link" href="{% if goods.has_next %}
+                    {% url "catalog:catalog" category_slug=slug_url page=goods.next_page_number %}
+                  {% else %} # {% endif %}">Next</a>
                 </li>
             </div>
         </ul>
     </nav>
 {% endblock %}
+{% block footer %} {% endblock %}
