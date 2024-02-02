@@ -11,11 +11,13 @@
                 Фильтры
             </button>
 
-            <form action="{% url "catalog:catalog" category_slug=slug_url %}" method="GET" class="dropdown-menu bg-dark" data-bs-theme="dark">
+            <form action="{% if request.GET.query %} {% url "catalog:search" %}{% else %}{% url "catalog:catalog" category_slug=slug_url %} {% endif %}" method="GET" class="dropdown-menu bg-dark" data-bs-theme="dark">
                 <div class="form-check text-white mx-3">
                     <input class="form-check-input" type="checkbox" name="on_sale" id="flexCheckDefault"
                            value="on" {% if request.GET.on_sale == 'on' %} checked {% endif %}>
-{#                    <input type="hidden" name="q" value="request.GET.q">#}
+                    {% if request.GET.query %}
+                        <input type="hidden" name="query" value="{{ request.GET.query }}">
+                    {% endif %}
                     <label class="form-check-label" for="flexCheckDefault">
                         Товары по акции
                     </label>

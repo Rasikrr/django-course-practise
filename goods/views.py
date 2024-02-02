@@ -7,7 +7,7 @@ from goods.services.services import *
 # Create your views here.
 
 
-def catalog(request, category_slug):
+def catalog(request, category_slug=None):
     # Get page number
     page = request.GET.get("page", "1")
 
@@ -18,10 +18,11 @@ def catalog(request, category_slug):
     # Get filters
     on_sale = request.GET.get("on_sale", None)
     order_by = request.GET.get("order_by", None)
+    query = request.GET.get("query", None)
 
     # Get products and filters
     goods = get_products_by_category(category_slug)
-    goods = get_filtered_products(goods, on_sale, order_by)
+    goods = get_filtered_products(goods, on_sale, order_by, query)
 
     # Pagination
     paginator = Paginator(goods, 3)

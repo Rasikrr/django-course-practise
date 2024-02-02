@@ -1,12 +1,13 @@
 from goods.models import Products, Categories
 from django.shortcuts import get_list_or_404
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 
 def get_products_by_category(category_slug):
     """Получить все товары с определенным слагом"""
     goods = Products.objects.all()
-    if category_slug != "all":
+    if category_slug and category_slug != "all":
         category = get_category_by_slug(category_slug)
         goods = get_list_or_404(goods.filter(category=category))
     return goods
@@ -16,13 +17,17 @@ def get_single_product_by_slug(product_slug):
     product = Products.objects.get(slug=product_slug)
     return product
 
-def get_filtered_products(goods, on_sale, order_by):
+def get_filtered_products(goods, on_sale, order_by, product_id):
     """Получить отфильтрованные товары"""
     if on_sale:
         goods = goods.filter(discount__gt=0)
     if order_by and order_by != "default":
         goods = goods.order_by(order_by)
+    if product_id:
+        if product_id.isdigit() and len(product_id) <= 5:
+            goods = goods.filter(id=int(product_id))
     return goods
+
 
 def get_category_by_slug(category_slug):
     """Получить категорию по слагу"""
