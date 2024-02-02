@@ -7,7 +7,10 @@ from goods.services.services import *
 # Create your views here.
 
 
-def catalog(request, category_slug, page=1):
+def catalog(request, category_slug):
+
+    page = request.GET.get("page", 1)
+
     goods = get_products_by_category(category_slug)
     paginator = Paginator(goods, 3)
     current_page = paginator.get_page(page)

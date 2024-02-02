@@ -76,20 +76,18 @@
             <div class="custom-shadow d-flex">
                 <li class="page-item {% if not goods.has_previous %} disabled {% endif %}">
                     <a class="page-link" href="{% if goods.has_previous %}
-                    {% url "catalog:catalog" category_slug=slug_url page=goods.previous_page_number %}
+                    ?page={{ goods.previous_page_number }}
                   {% else %} # {% endif %}">Previous</a>
                 </li>
                     {% for page in goods.paginator.page_range %}
                         {% if page >= goods.number|add:-2 and page <= goods.number|add:2 %}
                             <li class="page-item {% if page == goods.number %} active {% endif %}">
-                                <a class="page-link" href="{% if page != goods.number %}
-                                    {% url "catalog:catalog" category_slug=slug_url page=page %}
-                                {% else %} # {% endif %}">{{ page }}</a></li>
+                                <a class="page-link" href="{% if page != goods.number %} ?page={{ page }} {% else %} # {% endif %}">{{ page }}</a></li>
                         {% endif %}
                     {% endfor %}
                 <li class="page-item {% if not goods.has_next %} disabled {% endif %}">
                   <a class="page-link" href="{% if goods.has_next %}
-                    {% url "catalog:catalog" category_slug=slug_url page=goods.next_page_number %}
+                    ?page={{ goods.next_page_number }}
                   {% else %} # {% endif %}">Next</a>
                 </li>
             </div>
