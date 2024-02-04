@@ -2,6 +2,7 @@ from goods.models import Products, Categories
 from django.shortcuts import get_list_or_404
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 
 
 def get_products_by_category(category_slug):
@@ -17,15 +18,26 @@ def get_single_product_by_slug(product_slug):
     product = Products.objects.get(slug=product_slug)
     return product
 
-def get_filtered_products(goods, on_sale, order_by, product_id):
+def get_filtered_products(goods, on_sale, order_by, query):
     """Получить отфильтрованные товары"""
     if on_sale:
         goods = goods.filter(discount__gt=0)
     if order_by and order_by != "default":
         goods = goods.order_by(order_by)
-    if product_id:
-        if product_id.isdigit() and len(product_id) <= 5:
-            goods = goods.filter(id=int(product_id))
+    if query:
+        if query.isdigit() and len(query) <= 5:
+            goods = goods.filter(id=int(query))
+        else:
+            vector = SearchVector("name", "description")
+            query = SearchQuery(query)
+            goods = goods.annotate(rank=SearchRank(vector, query)).order_by("-rank")
+        # else:
+        #     keywords = list(filter(lambda x: len(x) > 2, query.split()))
+        #     q_objecets = Q()
+        #     for word in keywords:
+        #         q_objecets |= Q(description__icontains=word)
+        #         q_objecets |= Q(name__icontains=word)
+        #     goods = goods.filter(q_objecets)
     return goods
 
 
