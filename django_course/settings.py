@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     "main",
     "goods",
+    "users"
 
 
 ]
@@ -69,7 +70,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates', BASE_DIR / "main" / "templates" / "main",
-                 BASE_DIR / "goods" / "templates" / "goods"
+                 BASE_DIR / "goods" / "templates" / "goods",
+                 BASE_DIR / "users" / "templates"/ "users"
                  ]
         ,
         'APP_DIRS': True,
@@ -120,6 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "users.CustomUser"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

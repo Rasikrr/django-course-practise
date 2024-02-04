@@ -1,4 +1,4 @@
-{% extends "main/base.html" %}
+{% extends "base.html" %}
 {% load static %}
 {% load goods_tags %}
 
@@ -54,7 +54,13 @@
                     <img src="{{ product.image.url }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <a href="{% url "catalog:product" product_slug=product.slug %}">
-                            <p class="card-title">{{ product.name }}</p>
+                            <p class="card-title">
+                            {% autoescape off %}
+                                {% if product.headline %}
+                                {{ product.headline }}{% else %}
+                                {{ product.name }} {% endif %}
+                            {% endautoescape %}
+                            </p>
                         </a>
                         <p class="card-text ">{{ product.description|truncatechars:55 }}</p>
                         <p class="product_id">id: {{ product.display_id }}</p>
