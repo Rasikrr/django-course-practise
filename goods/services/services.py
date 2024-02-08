@@ -10,7 +10,7 @@ def get_products_by_category(category_slug):
     goods = Products.objects.all()
     if category_slug and category_slug != "all":
         category = get_category_by_slug(category_slug)
-        goods = get_list_or_404(goods.filter(category=category))
+        goods = goods.filter(category=category)
     return goods
 
 def get_single_product_by_slug(product_slug):

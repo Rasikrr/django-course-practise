@@ -21,6 +21,7 @@
 </head>
 
 <body>
+    {{ request.GET }}
     <header>
         <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container">
@@ -47,7 +48,7 @@
                             <a class="nav-link  text-white" href="carts/cart.html">Корзина</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  text-white" href="{% url "user:login" %}">Войти</a>
+                            <a class="nav-link  text-white" href="{% url "user:signin" %}">Войти</a>
                         </li>
                         <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle text-white" href="#" role="button"
@@ -58,7 +59,7 @@
                                 <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
                                 <li><a class="dropdown-item  text-white" href="users/profile.html">Личный кабинет</a>
                                 </li>
-                                <li><a class="dropdown-item  text-white" href="#">Админ панель</a></li>
+                                <li><a class="dropdown-item  text-white" href="admin/">Админ панель</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
