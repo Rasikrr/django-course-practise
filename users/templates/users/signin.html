@@ -10,7 +10,7 @@
                     <form method="POST" action="{% url "user:signin" %}">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="id_email" class="form-label">Имя пользователя</label>
+                            <label for="id_email" class="form-label">E-mail</label>
                             <input type="email" class="form-control" name="email" {% if form.email.value %}value="{{ form.email.value }}"{% endif %} id="id_email" placeholder="Введите ваш e-mail" maxlength="128" required autofocus>
                         </div>
                         <div class="mb-3">
@@ -20,7 +20,7 @@
                         <button type="submit" class="btn btn-dark btn-block">Войти</button>
                     </form>
                     <div class="mt-3">
-                        <a href="#">Забыли пароль?</a> | <a href="registration.html">Создать аккаунт</a>
+                        <a href="#">Забыли пароль?</a> | <a href="{% url "user:signup" %}">Создать аккаунт</a>
                     </div>
                     <hr>
                     <div class="text-center">

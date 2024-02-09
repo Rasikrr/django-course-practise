@@ -18,6 +18,13 @@ def signin_service(form) -> CustomUser:
         return None
 
 
+def signup_service(form) ->CustomUser:
+    if form.is_valid():
+        form.save()
+        return form.instance
+    return None
+
+
 def generate_context(**kwargs):
     """Генерация контекста для шаблонов"""
     return kwargs
