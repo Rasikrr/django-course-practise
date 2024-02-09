@@ -59,7 +59,7 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item  text-white" href="carts/cart.html">Корзина</a></li>
-                                    <li><a class="dropdown-item  text-white" href="users/profile.html">Личный кабинет</a>
+                                    <li><a class="dropdown-item  text-white" href="{% url "user:profile" %}">Личный кабинет</a>
                                     </li>
                                     {% if user.is_admin or user.is_staff %}
                                         <li><a class="dropdown-item  text-white" href="admin/">Админ панель</a></li>

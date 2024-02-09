@@ -3,10 +3,11 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-from users.services import signin_service, generate_context, signup_service
+from users.services import signin_service, generate_context, signup_service, profile_edit_service
 from users.models import CustomUser
-from users.forms import LoginForm, CreateUserForm
+from users.forms import LoginForm, CreateUserForm, ProfileForm
 
 
 
@@ -16,9 +17,10 @@ def signin(request):
         user = signin_service(form=form)
         if user:
             auth.login(request, user)
+            messages.success(request, "Вы успешно вошли в аккаунт")
             return redirect("main:index")
         else:
-            messages.error(request, "Неверная почта или пароль")
+            messages.warning(request, "Неверная почта или пароль")
             return redirect("user:signin")
     else:
         form = LoginForm()
@@ -32,6 +34,7 @@ def registration(request):
         user = signup_service(form)
         if user:
             auth.login(request, user, backend="users.backends.EmailBackEnd")
+            messages.success(request, "Вы успешно зарегестрированы и вошли в аккаунт")
             return redirect("main:index")
     else:
         form = CreateUserForm()
@@ -39,6 +42,25 @@ def registration(request):
     return render(request, "registration.html", context=context)
 
 
+@login_required(login_url="user:signin")
+def profile(request):
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=request.user, files=request.FILES)
+        # response = profile_edit_service(form)
+        # if response:
+        #     print("YESS")
+        #     messages.success(request, "Данные успешно обновлены")
+        #     return redirect("user:profile")
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Данные успешно обновлены")
+            return redirect("user:profile")
+    else:
+        form = ProfileForm()
+    context = generate_context(form=form)
+    return render(request, "profile.html")
+
 def logout(request):
     auth.logout(request)
+    messages.success(request, "Вы успешно вышли из аккаунты")
     return redirect("main:index")

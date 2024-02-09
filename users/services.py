@@ -24,6 +24,14 @@ def signup_service(form) ->CustomUser:
         return form.instance
     return None
 
+def profile_edit_service(form):
+    """Редактирование профиля"""
+    if form.is_valid():
+        form.save()
+        return True
+    return False
+
+
 
 def generate_context(**kwargs):
     """Генерация контекста для шаблонов"""
