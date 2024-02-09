@@ -7,6 +7,7 @@ from goods.models import Categories
 #     template_name = "index.html"
 
 def index(request):
+    print(request.user)
     categories = Categories.objects.all()
     context = {
         "categories": categories

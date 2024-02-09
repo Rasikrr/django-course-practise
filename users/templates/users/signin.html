@@ -9,15 +9,14 @@
                     <h2 class="text-center mb-4">Авторизация</h2>
                     <form method="POST" action="{% url "user:signin" %}">
                         {% csrf_token %}
-                        {{ form }}
-{#                        <div class="mb-3">#}
-{#                            <label for="username" class="form-label">Имя пользователя</label>#}
-{#                            <input type="text" class="form-control" id="username" placeholder="Введите ваше имя пользователя" required>#}
-{#                        </div>#}
-{#                        <div class="mb-3">#}
-{#                            <label for="password" class="form-label">Пароль</label>#}
-{#                            <input type="password" class="form-control" id="password" placeholder="Введите ваш пароль" required>#}
-{#                        </div>#}
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">Имя пользователя</label>
+                            <input type="email" class="form-control" name="email" {% if form.email.value %}value="{{ form.email.value }}"{% endif %} id="id_email" placeholder="Введите ваш e-mail" maxlength="128" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label">Пароль</label>
+                            <input type="password" class="form-control" name="password" id="id_password" placeholder="Введите ваш пароль" required>
+                        </div>
                         <button type="submit" class="btn btn-dark btn-block">Войти</button>
                     </form>
                     <div class="mt-3">

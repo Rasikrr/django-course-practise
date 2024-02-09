@@ -1,31 +1,25 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from users.forms import LoginForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.models import User
-from django.contrib import auth
+from django.contrib.auth import authenticate, login
+from users.models import CustomUser
+from django.contrib import messages
+from users.services import signin_service, generate_context
 
 
 def signin(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(username, password)
+        user = signin_service(form=form)
         if user:
-            auth.login(request, user)
+            login(request, user)
             return redirect("main:index")
         else:
+            messages.error(request, "Неверная почта или пароль")
             return redirect("user:signin")
-        # if form.is_valid():
-        #     print("1232")
-        #     return redirect("main:index")
-        # else:
-        #     print(form.error_messages, form.errors)
-        #     print("INVALID")
-        #     return redirect("user:signin")
     else:
         form = LoginForm()
-        context = {
-            "form": form
-        }
+        context = generate_context(form=form)
         return render(request, "signin.html", context=context)

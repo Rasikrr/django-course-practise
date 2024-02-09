@@ -21,7 +21,6 @@
 </head>
 
 <body>
-    {{ request.GET }}
     <header>
         <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container">
@@ -176,6 +175,7 @@
                 </div>
                 <div class="col-lg-10">
                     <!-- Контент на странице -->
+                    {% include "includes/notifications.html" %}
                     {% block content %} {% endblock %}
                 </div>
             </div>
