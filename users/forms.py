@@ -41,3 +41,4 @@ class ProfileForm(UserChangeForm):
             "username",
             "email"
         )
+

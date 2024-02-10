@@ -42,23 +42,19 @@ def registration(request):
     return render(request, "registration.html", context=context)
 
 
-@login_required(login_url="user:signin")
+@login_required
 def profile(request):
     if request.method == "POST":
         form = ProfileForm(request.POST, instance=request.user, files=request.FILES)
-        # response = profile_edit_service(form)
-        # if response:
-        #     print("YESS")
-        #     messages.success(request, "Данные успешно обновлены")
-        #     return redirect("user:profile")
-        if form.is_valid():
-            form.save()
+        response = profile_edit_service(form)
+        if response:
+            print("YESS")
             messages.success(request, "Данные успешно обновлены")
             return redirect("user:profile")
     else:
         form = ProfileForm()
     context = generate_context(form=form)
-    return render(request, "profile.html")
+    return render(request, "profile.html", context=context)
 
 def logout(request):
     auth.logout(request)
