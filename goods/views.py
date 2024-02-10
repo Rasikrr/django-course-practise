@@ -9,6 +9,7 @@ from goods.services.services import *
 
 def catalog(request, category_slug=None):
     # Get page number
+    print(request.GET)
     page = request.GET.get("page", "1")
 
     if not page.isdigit():

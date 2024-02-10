@@ -56,6 +56,9 @@ def profile(request):
     context = generate_context(form=form)
     return render(request, "profile.html", context=context)
 
+def users_cart(request):
+    return render(request, "users/users_cart.html")
+
 def logout(request):
     auth.logout(request)
     messages.success(request, "Вы успешно вышли из аккаунты")

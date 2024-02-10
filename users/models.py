@@ -12,5 +12,11 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"username: {self.username}, email: {self.email}"
+
+
+    class Meta:
+        db_table = "Custom user"
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
     
 
