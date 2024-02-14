@@ -1,4 +1,10 @@
-{% extends "base.html" %}{% load static %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block modal_cart %}
+    {% include "includes/cart_button.html" %}
+{% endblock %}
+
 
 {% block content %}
     <h1 class="mt-5 pt-5"><strong>Магазин мебели HOME</strong></h1>
