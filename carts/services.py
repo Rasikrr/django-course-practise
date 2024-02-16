@@ -20,14 +20,10 @@ def remove_from_cart(cart_id, user):
     return get_user_carts(user=user), quantity_deleted
 
 
-def change_cart_quantity(cart_id, change, user):
+def change_cart_quantity(cart_id, quantity, user):
     cart = Cart.objects.get(id=cart_id)
-    cart.quantity += change
-    print("QUANTITY = ",cart.quantity)
-    if cart.quantity == 1 and change==-1:
-        cart.delete()
-    else:
-        cart.save()
+    cart.quantity = quantity
+    cart.save()
     return get_user_carts(user=user)
 
 

@@ -24,8 +24,8 @@ def cart_add(request):
 
 def cart_change(request):
     cart_id = request.POST.get("cart_id")
-    change = int(request.POST.get("change"))
-    user_carts = services.change_cart_quantity(cart_id, change, request.user)
+    quantity = request.POST.get("quantity")
+    user_carts = services.change_cart_quantity(cart_id, quantity, request.user)
     cart_items_html = rerender_cart(request, user_carts)
     response_data = {
         "message": "Количество товара было изменено",

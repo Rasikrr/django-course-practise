@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load static %}
+{% load cart_tags %}
 
 
 {% block content %}
@@ -68,6 +69,8 @@
                     </div>
                 </div>
                 <!-- Корзина -->
+                {% user_carts request as carts %}
+
                 <div class="col-md-7">
                     <div class=" bg-white p-4 mb-4 mx-2 rounded custom-shadow">
                         <h3 class="text-center mb-4">Корзина</h3>
@@ -76,11 +79,6 @@
                             {% include "carts/includes/included_cart.html" %}
                             <!-- Закончилась разметка корзины -->
                         </div>
-                        {% if carts %}
-                            <a class="btn btn-dark" href="../orders/create_order.html">
-                                Оформить заказ
-                            </a>
-                        {% endif %}
                     </div>
                 </div>
                 <!-- Оформленные заказы -->
@@ -164,3 +162,4 @@
         </div>
     </div>
 {% endblock %}
+{% block footer %} {% endblock %}

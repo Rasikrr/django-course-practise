@@ -150,7 +150,6 @@ $(document).ready(function () {
             data: {
                 cart_id: cartID,
                 quantity: quantity,
-                change: change,
                 csrfmiddlewaretoken: $("[name=csrfmiddlewaretoken]").val(),
             },
 
