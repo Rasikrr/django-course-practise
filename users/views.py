@@ -18,6 +18,10 @@ def signin(request):
         if user:
             auth.login(request, user)
             messages.success(request, "Вы успешно вошли в аккаунт")
+            redirect_page = request.POST.get("next", None)
+            print(redirect_page)
+            if redirect_page and redirect_page != reverse("user:logout"):
+                return redirect(redirect_page)
             return redirect("main:index")
         else:
             messages.warning(request, "Неверная почта или пароль")

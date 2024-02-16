@@ -35,3 +35,5 @@ class Cart(models.Model):
 
     def __str__(self):
         return f"User: {self.user} | Product: {self.product.name} | Quantity: {self.quantity}"
+
+
