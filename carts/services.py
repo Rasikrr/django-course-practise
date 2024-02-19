@@ -26,18 +26,22 @@ def add_to_cart(product_id, request):
         return get_user_carts(request=request)
 
 
-def remove_from_cart(cart_id, user):
+def remove_from_cart(cart_id, request):
     cart = Cart.objects.get(id=cart_id)
     quantity_deleted = cart.quantity
     cart.delete()
-    return get_user_carts(user=user), quantity_deleted
+    if request.user.is_authenticated:
+        return get_user_carts(user=user), quantity_deleted
+    return get_user_carts(request=request), quantity_deleted
 
 
-def change_cart_quantity(cart_id, quantity, user):
+def change_cart_quantity(cart_id, quantity, request):
     cart = Cart.objects.get(id=cart_id)
     cart.quantity = quantity
     cart.save()
-    return get_user_carts(user=user)
+    if request.user.is_authenticated:
+        return get_user_carts(user=user)
+    return get_user_carts(request=request)
 
 
 

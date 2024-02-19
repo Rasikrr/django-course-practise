@@ -25,7 +25,7 @@ def cart_add(request):
 def cart_change(request):
     cart_id = request.POST.get("cart_id")
     quantity = request.POST.get("quantity")
-    user_carts = services.change_cart_quantity(cart_id, quantity, request.user)
+    user_carts = services.change_cart_quantity(cart_id, quantity, request)
     cart_items_html = rerender_cart(request, user_carts)
     response_data = {
         "message": "Количество товара было изменено",
@@ -37,7 +37,7 @@ def cart_change(request):
 
 def cart_remove(request):
     cart_id = request.POST.get("cart_id")
-    user_carts, quantity_deleted = services.remove_from_cart(cart_id=cart_id, user=request.user)
+    user_carts, quantity_deleted = services.remove_from_cart(cart_id=cart_id, request=request)
     cart_items_html = rerender_cart(request, user_carts)
     response_data = {
         "message": "Товар был удален из корзины",
