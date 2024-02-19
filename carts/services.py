@@ -1,8 +1,9 @@
 from goods.models import Products
 from carts.models import Cart
 
-def add_to_cart(product_id, user):
+def add_to_cart(product_id, request):
     product = Products.objects.get(id=product_id)
+    user = request.user
     if user.is_authenticated:
         cart = Cart.objects.filter(user=user, product=product)
         if not cart.exists():
@@ -11,6 +12,18 @@ def add_to_cart(product_id, user):
             cart = cart.first()
             cart.quantity += 1
         cart.save()
+        return get_user_carts(user=user)
+    else:
+        carts = Cart.objects.filter(session_key=request.session.session_key, product=product)
+        if carts.exists():
+            cart = carts.first()
+            cart.quantity += 1
+            cart.save()
+        else:
+            Cart.objects.create(
+                session_key=request.session.session_key, product=product, quantity=1
+            )
+        return get_user_carts(request=request)
 
 
 def remove_from_cart(cart_id, user):
@@ -31,4 +44,10 @@ def change_cart_quantity(cart_id, quantity, user):
 def get_user_carts(request=None, user=None):
     if user is None:
         user = request.user
-    return Cart.objects.filter(user=user)
+    if user.is_authenticated:
+        return Cart.objects.filter(user=user)
+    if not request.session.session_key:
+        request.session.create()
+    return Cart.objects.filter(session_key=request.session.session_key)
+
+

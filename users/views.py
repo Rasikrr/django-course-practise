@@ -5,7 +5,7 @@ from django.contrib import auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from users.services import signin_service, generate_context, signup_service, profile_edit_service
+from users.services import signin_service, generate_context, signup_service, profile_edit_service, add_anonymous_user_cart
 from users.models import CustomUser
 from users.forms import LoginForm, CreateUserForm, ProfileForm
 
@@ -17,9 +17,11 @@ def signin(request):
         user = signin_service(form=form)
         if user:
             auth.login(request, user)
+
+            add_anonymous_user_cart(request=request, user=user)
+
             messages.success(request, "Вы успешно вошли в аккаунт")
             redirect_page = request.POST.get("next", None)
-            print(redirect_page)
             if redirect_page and redirect_page != reverse("user:logout"):
                 return redirect(redirect_page)
             return redirect("main:index")
@@ -37,6 +39,9 @@ def registration(request):
         form = CreateUserForm(request.POST)
         user = signup_service(form)
         if user:
+
+            add_anonymous_user_cart(request=request, user=user)
+
             auth.login(request, user, backend="users.backends.EmailBackEnd")
             messages.success(request, "Вы успешно зарегестрированы и вошли в аккаунт")
             return redirect("main:index")

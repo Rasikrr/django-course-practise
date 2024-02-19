@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from users.models import CustomUser
+from carts.models import Cart
 
 
 
@@ -16,6 +17,14 @@ def signin_service(form) -> CustomUser:
             return None
     else:
         return None
+
+
+def add_anonymous_user_cart(request, user):
+    """Функция для привязки корзины анонимного пользователя с только что вошедшим или созданным пользователем"""
+    session_key = request.session.session_key
+    carts = Cart.objects.filter(session_key=session_key)
+    if carts:
+        carts.update(user=user)
 
 
 def signup_service(form) ->CustomUser:

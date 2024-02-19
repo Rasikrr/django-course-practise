@@ -13,7 +13,7 @@ from carts import services
 
 def cart_add(request):
     product_id = request.POST.get("product_id")
-    user_carts = services.add_to_cart(product_id, request.user)
+    user_carts = services.add_to_cart(product_id, request)
     cart_items_html = rerender_cart(request, user_carts)
     response_data = {
         "message": "Товар добавлен в корзину",
