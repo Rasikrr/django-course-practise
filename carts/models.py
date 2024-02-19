@@ -34,6 +34,7 @@ class Cart(models.Model):
         return round(self.product.sell_price(), 2) * self.quantity
 
     def __str__(self):
-        return f"User: {self.user} | Product: {self.product.name} | Quantity: {self.quantity}"
-
+        if self.user:
+            return f"User: {self.user} | Product: {self.product.name} | Quantity: {self.quantity}"
+        return f"Unauthorized user | Product: {self.product.name} | Quantity: {self.quantity}"
 
