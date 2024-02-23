@@ -40,7 +40,7 @@ def change_cart_quantity(cart_id, quantity, request):
     cart.quantity = quantity
     cart.save()
     if request.user.is_authenticated:
-        return get_user_carts(user=user)
+        return get_user_carts(user=request.user)
     return get_user_carts(request=request)
 
 
