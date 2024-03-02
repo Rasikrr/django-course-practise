@@ -31,7 +31,7 @@ def remove_from_cart(cart_id, request):
     quantity_deleted = cart.quantity
     cart.delete()
     if request.user.is_authenticated:
-        return get_user_carts(user=user), quantity_deleted
+        return get_user_carts(user=request.user), quantity_deleted
     return get_user_carts(request=request), quantity_deleted
 
 
