@@ -2,6 +2,10 @@
 $(document).ready(function () {
     // берем в переменную элемент разметки с id jq-notification для оповещений от ajax
     var successMessage = $("#jq-notification");
+    var order_btn = $("#order-button");
+    var block = $(".modal-body");
+    var is_btn_added = false;
+
 
     // // Ловим собыитие клика по кнопке добавить в корзину
     $(document).on("click", ".add-to-cart", function (e) {
@@ -30,6 +34,7 @@ $(document).ready(function () {
                 // Сообщение
                 successMessage.html(data.message);
                 successMessage.fadeIn(400);
+                button_is_added();
                 // Через 7сек убираем сообщение
                 setTimeout(function () {
                     successMessage.fadeOut(400);
@@ -209,4 +214,10 @@ $(document).ready(function () {
             $("#deliveryAddressField").hide();
         }
     });
+
+    function button_is_added(){
+        if(!is_btn_added){
+            block.append(order_btn);
+        }
+    }
 });

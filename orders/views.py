@@ -60,5 +60,5 @@ def create_order(request):
                                    last_name=request.user.last_name)
         form = CreateOrderForm(initial=initial)
 
-    context = generate_context(title="Home: Оформление заказа", form=form)
+    context = generate_context(title="Home: Оформление заказа", form=form, order=True)
     return render(request, "orders/create_order.html", context=context)
